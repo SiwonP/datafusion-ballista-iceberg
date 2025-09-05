@@ -1,0 +1,7 @@
+[package]
+name = "nessie-iceberg-catalog"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+iceberg = "0.4.0"

@@ -1,8 +1,5 @@
-[package]
-name = "datafusion-ballista-iceberg"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-iceberg = "0.4.0"
-iceberg-datafusion = "0.5.1"
+[workspace]
+members = [
+    "nessie-client",
+    "datafusion-nessie"
+]
