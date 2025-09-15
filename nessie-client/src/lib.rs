@@ -2,15 +2,19 @@ mod client;
 mod error;
 mod models;
 
-use client::NessieClient;
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let nessie = NessieClient::new("http://localhost:19120/api/v2/")?;
+    #[tokio::test]
+    async fn test_get_main_reference() {
+        let nessie = client::NessieClient::new("http://localhost:19120/api/v2/").unwrap();
+        let refresponse = nessie.get_reference("main".to_string()).await.unwrap();
 
-    let refresponse = nessie.get_reference("main".to_string()).await?;
+        println!("{:?}", refresponse);
 
-    print!("{:?}", refresponse);
+        // Optionally add assertions, e.g.,
+        assert_eq!(refresponse.reference.name, "main");
 
-    Ok(())
+    }
 }
