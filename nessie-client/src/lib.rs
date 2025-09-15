@@ -8,13 +8,23 @@ mod tests {
 
     #[tokio::test]
     async fn test_get_main_reference() {
+
         let nessie = client::NessieClient::new("http://localhost:19120/api/v2/").unwrap();
+
+
+        let references = nessie.list_references().await.unwrap();
+        println!("{:?}", references);
+
+
+        assert_eq!(references.len(), 1);
+
         let refresponse = nessie.get_reference("main".to_string()).await.unwrap();
 
         println!("{:?}", refresponse);
 
         // Optionally add assertions, e.g.,
         assert_eq!(refresponse.reference.name, "main");
+
 
     }
 }
