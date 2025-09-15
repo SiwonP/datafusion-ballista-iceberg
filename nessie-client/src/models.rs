@@ -31,9 +31,19 @@ pub struct ReferenceResponse {
 #[serde(tag = "type", rename_all = "UPPERCASE")]
 pub enum ContentEntry {
     IcebergTable {
-        name: String,
-        metadata_location: String,
         id: Option<String>,
+        metadata_location: String,
+        name: String,
+        schema_id: Option<i32>,
+        spec_id: Option<i32>,
+        snapshot_id: Option<i64>,
+        sort_order_id: Option<i32>,
+    },
+    DeltaLakeTable {
+        id: String,
+        metadata_location_history: Vec<String>,
+        checkpoint_location_history: Vec<String>,
+        last_checkpoint: String,
     },
     View {
         name: String,
