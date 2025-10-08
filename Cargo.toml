@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "nessie-client",
-    "datafusion-nessie"
+    "datafusion-nessie",
+    "nessie-iceberg-catalog"
 ]

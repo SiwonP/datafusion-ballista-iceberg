@@ -13,3 +13,4 @@ log = "0.4"
 url = "2"
 async-trait = "0.1"
 tokio = { version = "1", features = ["full"] }
+testcontainers = { version = "0.25.0", features = ["blocking"] }

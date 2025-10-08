@@ -18,8 +18,11 @@ pub struct Reference {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ReferencesResponse {
+    pub token: Option<String>,
     pub references: Vec<Reference>,
+    pub has_more: bool,
 }
 
 #[derive(Debug, Deserialize)]

@@ -7,8 +7,6 @@ use crate::models::{
 use reqwest::Client;
 use url::Url;
 
-
-
 #[derive(Debug)]
 pub struct NessieClient {
     base_url: Url,
