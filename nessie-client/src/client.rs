@@ -1,8 +1,6 @@
-
 use crate::error::NessieError;
 use crate::models::{
-    CommitResponse, EntriesResponse, Reference, ReferenceResponse,
-    ReferencesResponse,
+    CommitResponse, EntriesResponse, Reference, ReferenceResponse, ReferencesResponse,
 };
 use reqwest::Client;
 use url::Url;
@@ -72,7 +70,11 @@ impl NessieClient {
         &self,
         reference: Reference,
     ) -> Result<ReferenceResponse, NessieError> {
-        let url = self.base_url.join(&format!("trees/{}", reference.name))?;
+        let url = self.base_url.join(&format!(
+            "trees/{}@{}",
+            reference.name,
+            reference.hash.unwrap()
+        ))?;
         let response = self
             .client
             .delete(url)
@@ -83,10 +85,12 @@ impl NessieClient {
         Ok(response)
     }
 
-    pub async fn list_entries(&self, reference: &str) -> Result<Vec<String>, NessieError> {
-        let url = self
-            .base_url
-            .join(&format!("trees/{}/entries", reference))?;
+    pub async fn list_entries(&self, reference: Reference) -> Result<Vec<String>, NessieError> {
+        let url = self.base_url.join(&format!(
+            "trees/{}@{}/entries",
+            reference.name,
+            reference.hash.unwrap()
+        ))?;
         let response = self.client.get(url).send().await?;
 
         // if !response.status().is_success() {
@@ -111,12 +115,14 @@ impl NessieClient {
 
     pub async fn commit_entry(
         &self,
-        branch: &str,
+        reference: Reference,
         operations: crate::models::Operations,
     ) -> Result<crate::models::CommitResponse, NessieError> {
-        let url = self
-            .base_url
-            .join(&format!("trees/{}/history/commit", branch))?;
+        let url = self.base_url.join(&format!(
+            "trees/{}@{}/history/commit",
+            reference.name,
+            reference.hash.unwrap()
+        ))?;
         let response = self.client.post(url).json(&operations).send().await?;
 
         if !response.status().is_success() {

@@ -2,14 +2,14 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum ReferenceType {
     Branch,
     Tag,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Reference {
     pub name: String,
     #[serde(rename = "type")]
